@@ -436,25 +436,67 @@ import java.util.Scanner;
 public class RemoveLastOccurrence {
 
     public static String removeLast(String s, String w) {
-        int wordLen = w.length();
-        int lastOccurrence = -1;
+        int wordLen = 0;
+        for (char c : w.toCharArray()) {
+            wordLen++;
+        }
 
-        for (int i = 0; i <= s.length() - wordLen; i++) {
-            if (s.substring(i, i + wordLen).equals(w)) {
+        int lastOccurrence = -1;
+        int sLen = 0;
+
+        for (char c : s.toCharArray()) {
+            sLen++;
+        }
+
+        for (int i = 0; i <= sLen - wordLen; i++) {
+            boolean match = true;
+            for (int j = 0; j < wordLen; j++) {
+                if (s.charAt(i + j) != w.charAt(j)) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
                 lastOccurrence = i;
             }
         }
 
         if (lastOccurrence != -1) {
-            return s.substring(0, lastOccurrence) + s.substring(lastOccurrence + wordLen);
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < lastOccurrence; i++) {
+                result.append(s.charAt(i));
+            }
+            for (int i = lastOccurrence + wordLen; i < sLen; i++) {
+                result.append(s.charAt(i));
+            }
+            return result.toString();
         }
         return s;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String s = scanner.nextLine().strip();
-        String w = scanner.nextLine().strip();
+        
+        StringBuilder sb1 = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if (line.trim().isEmpty()) {
+                break;
+            }
+            sb1.append(line).append("\n");
+        }
+        
+        StringBuilder sb2 = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if (line.trim().isEmpty()) {
+                break;
+            }
+            sb2.append(line).append("\n");
+        }
+
+        String s = sb1.toString().trim();
+        String w = sb2.toString().trim();
 
         System.out.println(removeLast(s, w));
     }

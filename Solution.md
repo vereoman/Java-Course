@@ -462,41 +462,38 @@ public class RemoveLastOccurrence {
         }
 
         if (lastOccurrence != -1) {
-            StringBuilder result = new StringBuilder();
+            char[] result = new char[sLen - wordLen];
+            int index = 0;
             for (int i = 0; i < lastOccurrence; i++) {
-                result.append(s.charAt(i));
+                result[index++] = s.charAt(i);
             }
             for (int i = lastOccurrence + wordLen; i < sLen; i++) {
-                result.append(s.charAt(i));
+                result[index++] = s.charAt(i);
             }
-            return result.toString();
+            return new String(result);
         }
         return s;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
-        StringBuilder sb1 = new StringBuilder();
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.trim().isEmpty()) {
-                break;
-            }
-            sb1.append(line).append("\n");
-        }
-        
-        StringBuilder sb2 = new StringBuilder();
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.trim().isEmpty()) {
-                break;
-            }
-            sb2.append(line).append("\n");
+
+        char[] sArr = new char[1000];
+        int sLen = 0;
+        while (scanner.hasNext()) {
+            char c = scanner.next().charAt(0);
+            sArr[sLen++] = c;
         }
 
-        String s = sb1.toString().trim();
-        String w = sb2.toString().trim();
+        char[] wArr = new char[100];
+        int wLen = 0;
+        while (scanner.hasNext()) {
+            char c = scanner.next().charAt(0);
+            wArr[wLen++] = c;
+        }
+
+        String s = new String(sArr, 0, sLen);
+        String w = new String(wArr, 0, wLen);
 
         System.out.println(removeLast(s, w));
     }
